@@ -1,0 +1,7 @@
+
+.gradle/
+**/build/
+build-zap-kest.log
+*.bak
+*.backup-*
+*.avant-*
