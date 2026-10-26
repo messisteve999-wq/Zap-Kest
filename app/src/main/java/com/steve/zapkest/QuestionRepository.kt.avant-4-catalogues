@@ -1,0 +1,126 @@
+package com.steve.zapkest
+
+object QuestionRepository {
+    const val ROMANCE = "Amour et romance"
+    const val CONNAISSANCE = "Mieux se connaître"
+    const val PHILO = "Philosophie et réflexions"
+
+    val categories = listOf(ROMANCE, CONNAISSANCE, PHILO)
+
+    val all = listOf(
+        // 40 messages d'amour et de romance
+        q("r01", ROMANCE, 1, "J'aime la simplicité de nos conversations et le sourire qu'elles me donnent."),
+        q("r02", ROMANCE, 1, "J'espère que ta journée t'apportera autant de douceur que tu en apportes aux autres."),
+        q("r03", ROMANCE, 1, "Il y a des personnes qu'on apprend à apprécier naturellement. Tu en fais partie."),
+        q("r04", ROMANCE, 1, "J'aime découvrir ta façon de voir le monde, un message après l'autre."),
+        q("r05", ROMANCE, 1, "Un petit message de toi peut rendre une journée ordinaire plus agréable."),
+        q("r06", ROMANCE, 1, "Je ne cherche pas les mots parfaits, seulement une conversation sincère avec toi."),
+        q("r07", ROMANCE, 1, "Ton naturel est une qualité que j'apprécie beaucoup."),
+        q("r08", ROMANCE, 1, "J'aimerais apprendre à te connaître davantage, sans précipiter les choses."),
+        q("r09", ROMANCE, 1, "Certaines conversations donnent envie de laisser le temps faire son travail."),
+        q("r10", ROMANCE, 1, "J'aime quand une discussion passe du rire aux sujets profonds sans effort."),
+        q("r11", ROMANCE, 1, "Je trouve agréable de parler avec quelqu'un qui reste authentique."),
+        q("r12", ROMANCE, 1, "J'espère que tu trouveras aujourd'hui une raison supplémentaire de sourire."),
+        q("r13", ROMANCE, 1, "La beauté attire parfois le regard, mais la personnalité donne envie de rester."),
+        q("r14", ROMANCE, 1, "J'apprécie les petits détails qui rendent une personne unique."),
+        q("r15", ROMANCE, 1, "J'aime mieux les liens qui grandissent naturellement que ceux qu'on force."),
+        q("r16", ROMANCE, 1, "Avec toi, j'ai envie de découvrir des sujets dont on ne parle pas avec tout le monde."),
+        q("r17", ROMANCE, 1, "Un compliment sincère vaut davantage qu'une grande promesse."),
+        q("r18", ROMANCE, 1, "Je préfère une présence honnête à des paroles impressionnantes."),
+        q("r19", ROMANCE, 1, "J'aimerais connaître les petites choses qui te rendent vraiment heureuse."),
+        q("r20", ROMANCE, 1, "Je trouve qu'une belle complicité commence souvent par une conversation simple."),
+        q("r21", ROMANCE, 1, "Même à distance, l'attention et l'écoute peuvent rapprocher deux personnes."),
+        q("r22", ROMANCE, 1, "J'aime les personnes avec lesquelles on peut rire sans avoir à jouer un rôle."),
+        q("r23", ROMANCE, 1, "Je te souhaite une soirée paisible et quelques beaux moments à garder en mémoire."),
+        q("r24", ROMANCE, 1, "Ce qui me plaît, c'est de découvrir qui tu es au-delà des premières impressions."),
+        q("r25", ROMANCE, 1, "Je crois qu'un lien solide se construit avec du respect et de la patience."),
+        q("r26", ROMANCE, 1, "J'aime quand chacun peut parler librement et être écouté sans jugement."),
+        q("r27", ROMANCE, 1, "Tu mérites des relations dans lesquelles tu peux rester toi-même."),
+        q("r28", ROMANCE, 1, "Je préfère les attentions sincères aux grandes déclarations sans lendemain."),
+        q("r29", ROMANCE, 1, "Une bonne conversation peut parfois être le plus beau moment de la journée."),
+        q("r30", ROMANCE, 1, "J'espère qu'on pourra échanger encore sur les choses qui nous font réfléchir."),
+        q("r31", ROMANCE, 1, "Je trouve charmant quelqu'un qui sait écouter autant que parler."),
+        q("r32", ROMANCE, 1, "J'aime les sourires qui viennent d'un moment simple et sincère."),
+        q("r33", ROMANCE, 1, "Apprendre à se connaître prend du temps, et je trouve cela plutôt beau."),
+        q("r34", ROMANCE, 1, "Je voudrais que nos échanges restent naturels, agréables et sans pression."),
+        q("r35", ROMANCE, 1, "La confiance me semble plus précieuse que les promesses trop rapides."),
+        q("r36", ROMANCE, 1, "J'aime les personnes qui ont des rêves et qui osent en parler."),
+        q("r37", ROMANCE, 1, "J'aimerais connaître les souvenirs qui te font sourire à chaque fois."),
+        q("r38", ROMANCE, 1, "La distance demande des efforts, mais aussi de la confiance et du dialogue."),
+        q("r39", ROMANCE, 1, "Je trouve qu'une attention sincère peut compter davantage qu'un cadeau coûteux."),
+        q("r40", ROMANCE, 1, "Merci pour cette conversation. J'espère qu'on aura encore de beaux sujets à partager."),
+
+        // 35 questions pour mieux connaître une personne
+        q("k01", CONNAISSANCE, 1, "Qu'est-ce que tu aimes faire pendant ton temps libre ?"),
+        q("k02", CONNAISSANCE, 1, "Quel genre de musique te met immédiatement de bonne humeur ?"),
+        q("k03", CONNAISSANCE, 1, "Tu préfères les sorties animées ou les moments tranquilles ?"),
+        q("k04", CONNAISSANCE, 1, "Quel plat pourrais-tu manger plusieurs fois sans te lasser ?"),
+        q("k05", CONNAISSANCE, 1, "Quel endroit aimerais-tu visiter un jour ?"),
+        q("k06", CONNAISSANCE, 1, "Quel film ou quelle série t'a vraiment marqué ?"),
+        q("k07", CONNAISSANCE, 1, "Quelle activité aimerais-tu apprendre ?"),
+        q("k08", CONNAISSANCE, 1, "Tu es plutôt du matin ou du soir ?"),
+        q("k09", CONNAISSANCE, 1, "Quel souvenir d'enfance te fait encore sourire ?"),
+        q("k10", CONNAISSANCE, 1, "Qu'est-ce qui peut améliorer une journée difficile ?"),
+        q("k11", CONNAISSANCE, 1, "Quelle qualité apprécies-tu le plus chez un ami ?"),
+        q("k12", CONNAISSANCE, 1, "Comment montres-tu aux autres que tu tiens à eux ?"),
+        q("k13", CONNAISSANCE, 1, "Qu'est-ce qui t'aide à faire confiance à quelqu'un ?"),
+        q("k14", CONNAISSANCE, 1, "Tu préfères parler d'un problème tout de suite ou réfléchir avant ?"),
+        q("k15", CONNAISSANCE, 1, "Qu'est-ce qui te fait te sentir compris par une personne ?"),
+        q("k16", CONNAISSANCE, 1, "Quel rêve aimerais-tu réaliser dans les prochaines années ?"),
+        q("k17", CONNAISSANCE, 1, "Quelle compétence aimerais-tu développer ?"),
+        q("k18", CONNAISSANCE, 1, "Qu'est-ce qui te motive quand tu rencontres un obstacle ?"),
+        q("k19", CONNAISSANCE, 1, "Quelle valeur est la plus importante pour toi ?"),
+        q("k20", CONNAISSANCE, 1, "Qu'est-ce qui te rend fier ou fière de toi ?"),
+        q("k21", CONNAISSANCE, 1, "Tu préfères planifier ou improviser ?"),
+        q("k22", CONNAISSANCE, 1, "Quelle petite attention te fait plaisir ?"),
+        q("k23", CONNAISSANCE, 1, "Comment aimes-tu passer un week-end idéal ?"),
+        q("k24", CONNAISSANCE, 1, "Quelle personne t'a appris une leçon importante ?"),
+        q("k25", CONNAISSANCE, 1, "Qu'est-ce qui te fait rire à tous les coups ?"),
+        q("k26", CONNAISSANCE, 1, "Quand tu es contrarié, préfères-tu parler ou prendre du recul ?"),
+        q("k27", CONNAISSANCE, 1, "Pour toi, qu'est-ce qui fait durer une amitié ?"),
+        q("k28", CONNAISSANCE, 1, "Comment préfères-tu garder le contact quand tu es occupé ?"),
+        q("k29", CONNAISSANCE, 1, "Quelle activité aimerais-tu partager avec quelqu'un ?"),
+        q("k30", CONNAISSANCE, 1, "Qu'est-ce qui te donne envie de mieux connaître une personne ?"),
+        q("k31", CONNAISSANCE, 1, "Quelle habitude aimerais-tu changer ou améliorer ?"),
+        q("k32", CONNAISSANCE, 1, "Quelle est ta manière préférée de célébrer une bonne nouvelle ?"),
+        q("k33", CONNAISSANCE, 1, "Qu'est-ce qui te semble essentiel dans une relation équilibrée ?"),
+        q("k34", CONNAISSANCE, 1, "Tu préfères les messages fréquents ou les longues discussions occasionnelles ?"),
+        q("k35", CONNAISSANCE, 1, "Quelle question aimerais-tu qu'on te pose plus souvent ?"),
+
+        // 25 réflexions philosophiques originales
+        q("p01", PHILO, 1, "Se connaître soi-même est parfois le début d'un grand changement."),
+        q("p02", PHILO, 1, "Le bonheur se cache parfois dans les choses que l'on ne remarque plus."),
+        q("p03", PHILO, 1, "Écouter pour comprendre est souvent plus utile qu'écouter pour répondre."),
+        q("p04", PHILO, 1, "Le temps révèle parfois ce que les paroles ne peuvent pas prouver."),
+        q("p05", PHILO, 1, "Une erreur peut devenir une leçon si l'on accepte de l'examiner."),
+        q("p06", PHILO, 1, "La liberté implique aussi la responsabilité de nos choix."),
+        q("p07", PHILO, 1, "Changer d'avis après avoir appris quelque chose est une forme de courage."),
+        q("p08", PHILO, 1, "La richesse d'une personne ne se mesure pas uniquement à ce qu'elle possède."),
+        q("p09", PHILO, 1, "Le respect commence souvent par la façon dont nous écoutons les autres."),
+        q("p10", PHILO, 1, "On peut être différent sans être ennemi."),
+        q("p11", PHILO, 1, "La patience ne signifie pas attendre sans agir, mais avancer sans précipitation."),
+        q("p12", PHILO, 1, "Nos habitudes construisent souvent le quotidien que nous finirons par vivre."),
+        q("p13", PHILO, 1, "Une question sincère peut ouvrir une porte qu'une affirmation ferme aurait fermée."),
+        q("p14", PHILO, 1, "La confiance se construit lentement et peut se fragiliser rapidement."),
+        q("p15", PHILO, 1, "La sagesse consiste parfois à reconnaître les limites de ce que l'on sait."),
+        q("p16", PHILO, 1, "Le courage n'est pas l'absence de peur, mais la capacité d'avancer malgré elle."),
+        q("p17", PHILO, 1, "Comprendre quelqu'un ne signifie pas forcément être d'accord avec lui."),
+        q("p18", PHILO, 1, "Les petites décisions répétées peuvent changer une vie entière."),
+        q("p19", PHILO, 1, "Une relation saine laisse de la place à la proximité comme à l'indépendance."),
+        q("p20", PHILO, 1, "Le silence peut apaiser, mais les mots restent nécessaires pour résoudre certains conflits."),
+        q("p21", PHILO, 1, "Nous apprenons parfois davantage en reconnaissant une erreur qu'en cachant nos faiblesses."),
+        q("p22", PHILO, 1, "La réussite a plus de sens lorsqu'elle respecte aussi nos valeurs."),
+        q("p23", PHILO, 1, "Le passé peut nous instruire sans devoir décider de tout notre avenir."),
+        q("p24", PHILO, 1, "La gentillesse est plus forte lorsqu'elle s'accompagne de sincérité."),
+        q("p25", PHILO, 1, "La vie ne donne pas toujours des réponses immédiates, mais elle offre des occasions d'apprendre.")
+    )
+
+    private fun q(id: String, category: String, level: Int, text: String) =
+        Question(id, category, level, text)
+
+    fun questionsFor(category: String): List<Question> =
+        all.filter { it.category == category }
+
+    fun dailyQuestions(day: Long = java.time.LocalDate.now().toEpochDay()): List<Question> =
+        all.sortedBy { ((it.id.hashCode().toLong() * 31L + day * 17L) and Long.MAX_VALUE) }
+}

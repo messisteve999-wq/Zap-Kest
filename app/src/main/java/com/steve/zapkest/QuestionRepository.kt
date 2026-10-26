@@ -1,36 +1,225 @@
 package com.steve.zapkest
 
+import java.time.LocalDate
+
 object QuestionRepository {
-    val categories = listOf("Faire connaissance", "Amitié", "Drague amicale", "Personnalité", "À distance", "Romance & Compliments", "Citations du monde")
-    val all = listOf(
-        q("fc01","Faire connaissance",1,"Qu’est-ce que tu aimes faire quand tu as du temps libre ?"), q("fc02","Faire connaissance",1,"Quel genre de musique te met toujours de bonne humeur ?"), q("fc03","Faire connaissance",1,"Tu préfères les sorties ou les soirées tranquilles ?"), q("fc04","Faire connaissance",1,"Quelle petite chose peut rendre ta journée meilleure ?"), q("fc05","Faire connaissance",1,"Si tu pouvais visiter un endroit ce week-end, tu choisirais lequel ?"), q("fc06","Faire connaissance",1,"Quel plat pourrais-tu manger plusieurs fois sans te lasser ?"), q("fc07","Faire connaissance",1,"Tu es plutôt du matin ou du soir ?"), q("fc08","Faire connaissance",1,"Quel film ou quelle série peux-tu recommander ?"), q("fc09","Faire connaissance",1,"Tu préfères apprendre en essayant ou en observant ?"), q("fc10","Faire connaissance",1,"Quel talent aimerais-tu apprendre un jour ?"),
-        q("am01","Amitié",2,"Pour toi, qu’est-ce qui fait une amitié solide ?"), q("am02","Amitié",2,"Quel geste simple te fait sentir qu’un ami pense à toi ?"), q("am03","Amitié",2,"Tu préfères parler tout de suite d’un problème ou prendre du recul ?"), q("am04","Amitié",2,"Quel souvenir avec tes amis te fait encore rire ?"), q("am05","Amitié",2,"Qu’est-ce qui te donne confiance en une personne ?"), q("am06","Amitié",2,"Tu apprécies plutôt les conseils directs ou qu’on t’écoute d’abord ?"), q("am07","Amitié",2,"Pour toi, quelle qualité compte le plus chez un ami ?"), q("am08","Amitié",2,"Quelle activité aimerais-tu partager avec tes amis prochainement ?"), q("am09","Amitié",2,"Comment aimes-tu qu’un ami te remonte le moral ?"), q("am10","Amitié",2,"Tu penses qu’une belle amitié peut commencer par une conversation inattendue ?"),
-        q("dr01","Drague amicale",3,"Qu’est-ce qui rend une conversation vraiment agréable pour toi ?"), q("dr02","Drague amicale",3,"Tu préfères quelqu’un qui te fait rire ou quelqu’un qui sait bien t’écouter ?"), q("dr03","Drague amicale",3,"Quel petit détail peut rendre une personne charmante à tes yeux ?"), q("dr04","Drague amicale",3,"Tu aimes les taquineries gentilles ou les discussions plus sérieuses ?"), q("dr05","Drague amicale",3,"Quelle qualité te donne envie de mieux connaître quelqu’un ?"), q("dr06","Drague amicale",3,"Tu préfères les compliments discrets ou les compliments spontanés ?"), q("dr07","Drague amicale",3,"Qu’est-ce qui te fait sourire quand tu reçois un message ?"), q("dr08","Drague amicale",3,"Pour toi, une belle complicité commence comment ?"), q("dr09","Drague amicale",3,"Tu trouves ça sympa quand quelqu’un se souvient des petits détails que tu racontes ?"), q("dr10","Drague amicale",3,"Tu préfères apprendre à connaître quelqu’un lentement ou spontanément ?"),
-        q("ps01","Personnalité",3,"Qu’est-ce qui te rend fier ou fière de toi ?"), q("ps02","Personnalité",3,"Qu’est-ce qui t’aide à garder le moral pendant une journée difficile ?"), q("ps03","Personnalité",3,"Tu prends tes décisions plutôt avec la logique, l’intuition ou un mélange des deux ?"), q("ps04","Personnalité",3,"Quelle valeur est particulièrement importante pour toi ?"), q("ps05","Personnalité",3,"Tu préfères réfléchir seul avant de parler ou discuter pour clarifier tes idées ?"), q("ps06","Personnalité",3,"Qu’aimerais-tu apprendre sur toi-même cette année ?"), q("ps07","Personnalité",3,"Qu’est-ce qui te donne le sentiment d’être compris par quelqu’un ?"), q("ps08","Personnalité",3,"Quand tu as un objectif, qu’est-ce qui t’aide à rester motivé ?"), q("ps09","Personnalité",3,"Tu préfères planifier les choses ou laisser une place à l’imprévu ?"), q("ps10","Personnalité",3,"Quelle expérience t’a appris quelque chose d’important ?"),
-        q("ds01","À distance",3,"Qu’est-ce qui te fait sentir proche de quelqu’un même à distance ?"), q("ds02","À distance",3,"Tu préfères les appels spontanés ou les moments prévus ensemble ?"), q("ds03","À distance",3,"Quel petit geste à distance pourrait te faire plaisir ?"), q("ds04","À distance",3,"Comment aimes-tu garder le contact quand les journées sont chargées ?"), q("ds05","À distance",3,"Pour toi, qu’est-ce qui aide à garder une relation équilibrée à distance ?"), q("ds06","À distance",3,"Tu préfères envoyer des messages courts souvent ou discuter plus longtemps de temps en temps ?"), q("ds07","À distance",3,"Quelle activité pourrait-on faire ensemble même chacun de son côté ?"), q("ds08","À distance",3,"Comment préfères-tu parler d’un malentendu quand on n’est pas au même endroit ?"), q("ds09","À distance",3,"Quel genre de message peut te donner le sourire pendant une journée chargée ?"), q("ds10","À distance",3,"Qu’est-ce qui te semble important pour que chacun garde aussi son espace personnel ?"),
 
-        q("ro01","Romance & Compliments",2,"J’aime la façon dont tu rends une conversation simple agréable."),
-        q("ro02","Romance & Compliments",2,"Plus je te connais, plus j’ai envie de découvrir la personne que tu es vraiment."),
-        q("ro03","Romance & Compliments",2,"J’espère que ta journée sera aussi lumineuse que le sourire que tu donnes aux autres."),
-        q("ro04","Romance & Compliments",2,"Même quand on est loin, un petit message de toi peut rendre ma journée meilleure."),
-        q("ro05","Romance & Compliments",3,"Je ne veux pas te promettre le monde ; je préfère te montrer sincèrement la place que tu prends dans ma vie."),
-        q("ro06","Romance & Compliments",2,"Ce que j’apprécie chez toi, ce n’est pas seulement ton charme, c’est aussi ta façon de voir les choses."),
-        q("ro07","Romance & Compliments",2,"J’aime parler avec toi, parce que je peux être moi-même sans avoir besoin d’en faire trop."),
-        q("ro08","Romance & Compliments",3,"Je ne veux pas précipiter les choses ; j’aimerais simplement apprendre à mieux te connaître, si tu en as envie."),
-        q("ci01","Citations du monde",3,"« Le cœur a ses raisons que la raison ne connaît point. » — Blaise Pascal, Pensées."),
-        q("ci02","Citations du monde",1,"« Je pense, donc je suis. » — René Descartes."),
-        q("ci03","Citations du monde",3,"« L'homme est né libre, et partout il est dans les fers. » — Jean-Jacques Rousseau, Du contrat social."),
-        q("ci04","Citations du monde",3,"« Il faut imaginer Sisyphe heureux. » — Albert Camus, Le Mythe de Sisyphe."),
-        q("ci05","Citations du monde",3,"« Au milieu de l'hiver, j'apprenais enfin qu'il y avait en moi un été invincible. » — Albert Camus, Retour à Tipasa."),
-        q("ci06","Citations du monde",2,"« Connais-toi toi-même. » — maxime antique associée à la tradition grecque."),
-        q("ci07","Citations du monde",2,"« Rien ne se perd, rien ne se crée, tout se transforme. » — formule associée à Lavoisier."),
-        q("ci08","Citations du monde",2,"La sagesse commence par la connaissance de soi — idée philosophique, auteur non attribué."),
-        q("ci09","Citations du monde",2,"Le bonheur dépend aussi de nos choix — idée associée à la philosophie d’Aristote."),
-        q("ci10","Citations du monde",2,"Apprendre, c’est aussi reconnaître ce que l’on ne sait pas — idée traditionnellement associée à la sagesse de Confucius.")
+    const val ROMANCE = "Romantisme, compliments et drague amicale"
+    const val PHILO = "Citations philosophiques et débats"
+    const val CONNAISSANCE = "Apprendre à connaître une fille"
+    const val COPINE = "Faire durer une conversation avec ma copine"
 
+    val categories = listOf(ROMANCE, PHILO, CONNAISSANCE, COPINE)
+
+    private val romanceMessages = listOf(
+        "J'aime beaucoup ton sourire.",
+        "Ton humour rend nos conversations agréables.",
+        "J'apprécie ta sincérité et ta façon d'être.",
+        "Tu as une manière de réfléchir qui m'intéresse.",
+        "J'aime découvrir ta personnalité petit à petit.",
+        "Ta gentillesse est une belle qualité.",
+        "C'est toujours agréable de discuter avec toi.",
+        "J'apprécie les petites attentions que tu partages.",
+        "Tu sais rendre une conversation intéressante.",
+        "J'aime ton naturel, reste comme tu es.",
+        "Tu as une énergie positive qui fait plaisir.",
+        "J'aime la façon dont tu exprimes tes idées.",
+        "Tu mérites quelqu'un qui respecte ta personnalité.",
+        "J'apprécie ta manière d'écouter les autres.",
+        "Ton sourire peut illuminer une journée ordinaire.",
+        "J'aime quand on peut rire de choses simples.",
+        "Tu as des qualités qu'on découvre en prenant le temps.",
+        "J'apprécie les échanges où chacun peut être lui-même.",
+        "J'aime apprendre à te connaître sans précipitation.",
+        "Ta présence rend certaines journées plus agréables."
     )
-    private fun q(id:String, category:String, level:Int, text:String) = Question(id, category, level, text)
-    fun questionsFor(category: String) = all.filter { it.category == category }
-    fun dailyQuestions(day: Long = java.time.LocalDate.now().toEpochDay()): List<Question> =
-        all.sortedBy { ((it.id.hashCode().toLong() * 31L + day * 17L) and Long.MAX_VALUE) }.take(20)
+
+    private val romanceQuestions = listOf(
+        "Quelle qualité apprécies-tu le plus chez une personne ?",
+        "Quel compliment te fait vraiment plaisir ?",
+        "Qu'est-ce qui te donne envie de mieux connaître quelqu'un ?",
+        "Préfères-tu les mots doux ou les petites attentions ?",
+        "Pour toi, qu'est-ce qu'une belle complicité ?"
+    )
+
+    private val quotes = listOf(
+        "« Je pense, donc je suis. » — René Descartes",
+        "« Le cœur a ses raisons que la raison ne connaît point. » — Blaise Pascal",
+        "« L'homme est né libre, et partout il est dans les fers. » — Jean-Jacques Rousseau",
+        "« Il faut imaginer Sisyphe heureux. » — Albert Camus",
+        "« On ne naît pas femme : on le devient. » — Simone de Beauvoir",
+        "« Sapere aude ! » — devise des Lumières associée à Emmanuel Kant",
+        "« Connais-toi toi-même. » — maxime antique traditionnellement associée à Socrate",
+        "« L'existence précède l'essence. » — formule associée à Jean-Paul Sartre",
+        "« Ce qui trouble les hommes, ce ne sont pas les choses, mais les jugements qu'ils portent sur ces choses. » — Épictète",
+        "« Le bonheur dépend de nous-mêmes. » — idée attribuée à Aristote"
+    )
+
+    private val debates = listOf(
+        "Le bonheur dépend-il davantage de nos choix ou de notre situation ?",
+        "L'argent rend-il heureux ou apporte-t-il surtout du confort ?",
+        "Faut-il toujours dire la vérité, même lorsqu'elle fait mal ?",
+        "Qu'est-ce qui compte le plus dans une amitié durable ?",
+        "Les réseaux sociaux rapprochent-ils vraiment les gens ?",
+        "Peut-on réussir sa vie sans gagner beaucoup d'argent ?",
+        "Le pardon est-il toujours nécessaire après une trahison ?",
+        "Les erreurs nous apprennent-elles plus que les réussites ?",
+        "La liberté implique-t-elle des responsabilités envers les autres ?",
+        "Comment reconnaître une relation fondée sur le respect ?"
+    )
+
+    private val knowQuestions = listOf(
+        "Qu'est-ce qui te rend heureuse pendant tes moments de repos ?",
+        "Comment imagines-tu ta vie dans quelques années ?",
+        "Quel souvenir te fait toujours sourire ?",
+        "Qu'aimerais-tu découvrir ou apprendre cette année ?",
+        "Quelle place donnes-tu à l'amitié dans ta vie ?",
+        "Qu'est-ce qui compte le plus pour toi dans une relation ?",
+        "Qu'est-ce qui te donne confiance en une personne ?",
+        "Quelle petite attention apprécies-tu particulièrement ?",
+        "Quel endroit aimerais-tu visiter un jour ?",
+        "Quel rêve aimerais-tu réaliser en priorité ?",
+        "Quelles qualités admires-tu chez les autres ?",
+        "Comment préfères-tu régler un désaccord ?",
+        "Qu'est-ce qui te motive quand tu traverses une période difficile ?",
+        "Quelle activité te fait perdre la notion du temps ?",
+        "Quelle musique correspond à ton humeur actuelle ?",
+        "Quel est le meilleur conseil qu'on t'ait donné ?",
+        "Qu'est-ce qui te fait rire à coup sûr ?",
+        "Qu'aimerais-tu que les gens comprennent mieux à ton sujet ?",
+        "Quelle tradition aimerais-tu garder toute ta vie ?",
+        "Qu'est-ce qui te fait te sentir respectée et écoutée ?"
+    )
+
+    private val chatQuestions = listOf(
+        "Raconte-moi le meilleur moment de ta journée.",
+        "Quel projet aimerais-tu qu'on réalise ensemble ?",
+        "Si on pouvait voyager demain, où aimerais-tu aller ?",
+        "Quelle musique te touche particulièrement en ce moment ?",
+        "Qu'est-ce qui t'a fait rire aujourd'hui ?",
+        "Quels rêves aimerais-tu partager avec moi ?",
+        "Comment puis-je te soutenir quand tu passes une journée difficile ?",
+        "Quelle petite tradition pourrait-on créer ensemble ?",
+        "Quelle attention te ferait plaisir cette semaine ?",
+        "Qu'aimerais-tu apprendre ou essayer bientôt ?",
+        "Quel souvenir de nous te fait sourire ?",
+        "Quel film aimerais-tu regarder ensemble ?",
+        "Quel repas aimerais-tu qu'on prépare à deux ?",
+        "Quelle activité simple te ferait plaisir ce week-end ?",
+        "Qu'est-ce qui te donne le sentiment qu'on est une bonne équipe ?",
+        "Comment préfères-tu qu'on se réconcilie après un désaccord ?",
+        "Quelle est la chose que tu aimerais faire plus souvent avec moi ?",
+        "Qu'est-ce qui rend une journée ordinaire spéciale pour toi ?",
+        "Quelle nouvelle activité pourrait-on découvrir ensemble ?",
+        "De quoi aimerais-tu parler davantage avec moi ?"
+    )
+
+    private fun stableOrder(
+        questions: List<Question>,
+        day: Long
+    ): List<Question> {
+        return questions.sortedBy {
+            val hash = it.id.hashCode().toLong()
+            Math.floorMod(hash * 31L + day * 17L, Long.MAX_VALUE)
+        }
+    }
+
+    private fun makeQuestions(
+        category: String,
+        prefix: String,
+        messages: List<String>,
+        day: Long,
+        level: Int = 1
+    ): List<Question> {
+        val expanded = buildList {
+            messages.forEachIndexed { index, message ->
+                add(Question("${prefix}_$index", category, level, message))
+            }
+        }
+
+        val unique = expanded.distinctBy { it.text.trim().lowercase() }
+        if (unique.isEmpty()) return emptyList()
+
+        val result = mutableListOf<Question>()
+        result.addAll(unique)
+
+        var round = 1
+        while (result.size < 50) {
+            unique.forEachIndexed { index, question ->
+                if (result.size < 50) {
+                    result.add(
+                        Question(
+                            "${prefix}_${round}_${index}",
+                            category,
+                            question.level,
+                            variation(question.text, round)
+                        )
+                    )
+                }
+            }
+            round++
+        }
+
+        return stableOrder(result, day).take(50)
+    }
+
+    private fun variation(text: String, round: Int): String {
+        return when (round % 5) {
+            0 -> "$text Qu'en penses-tu ?"
+            1 -> "$text Et toi, comment le vois-tu ?"
+            2 -> "$text J'aimerais connaître ton avis."
+            3 -> "$text Tu peux m'en dire davantage ?"
+            else -> "$text Pourquoi est-ce important pour toi ?"
+        }
+    }
+
+    private fun catalog(category: String, day: Long): List<Question> {
+        return when (category) {
+            ROMANCE -> makeQuestions(
+                ROMANCE, "rom",
+                romanceMessages + romanceQuestions,
+                day
+            )
+
+            CONNAISSANCE -> makeQuestions(
+                CONNAISSANCE, "know",
+                knowQuestions,
+                day
+            )
+
+            COPINE -> makeQuestions(
+                COPINE, "chat",
+                chatQuestions,
+                day
+            )
+
+            PHILO -> {
+                val combinations = quotes.flatMapIndexed { i, quote ->
+                    debates.mapIndexed { j, debate ->
+                        Question(
+                            "philo_${i}_$j",
+                            PHILO,
+                            2,
+                            "$quote\n\nSujet à discuter : $debate"
+                        )
+                    }
+                }
+                stableOrder(combinations, day).take(50)
+            }
+
+            else -> emptyList()
+        }
+    }
+
+    fun questionsFor(
+        category: String,
+        day: Long = LocalDate.now().toEpochDay()
+    ): List<Question> = catalog(category, day)
+
+    fun dailyQuestions(
+        day: Long = LocalDate.now().toEpochDay()
+    ): List<Question> = categories.flatMap { catalog(it, day) }
+
+    val all: List<Question>
+        get() = dailyQuestions()
 }

@@ -1,0 +1,159 @@
+package com.steve.zapkest
+
+import java.time.LocalDate
+
+object QuestionRepository {
+    const val ROMANCE = "Romantisme, compliments et drague amicale"
+    const val PHILO = "Citations philosophiques et débats"
+    const val CONNAISSANCE = "Apprendre à connaître une fille"
+    const val COPINE = "Faire durer une conversation avec ma copine"
+
+    val categories = listOf(ROMANCE, PHILO, CONNAISSANCE, COPINE)
+
+    private val romanceStart = listOf(
+        "J'aime chez toi", "Je trouve charmant", "J'apprécie beaucoup",
+        "Ce qui me plaît, c'est", "Je trouve touchant",
+        "J'aime découvrir", "Je souris quand je pense à",
+        "Je trouve beau", "J'aimerais mieux connaître",
+        "Je voulais te dire que j'apprécie"
+    )
+    private val romanceEnd = listOf(
+        "ton sourire.", "ton humour.", "ta sincérité.",
+        "ta gentillesse.", "ta façon de réfléchir.",
+        "ton naturel.", "ta manière d'écouter.",
+        "ta personnalité.", "nos conversations.",
+        "les petites attentions que tu partages."
+    )
+
+    private val quotes = listOf(
+        "« Je pense, donc je suis. » — René Descartes",
+        "« Le cœur a ses raisons que la raison ne connaît point. » — Blaise Pascal",
+        "« L'homme est né libre, et partout il est dans les fers. » — Jean-Jacques Rousseau",
+        "« Il faut imaginer Sisyphe heureux. » — Albert Camus",
+        "« On ne naît pas femme : on le devient. » — Simone de Beauvoir",
+        "« Sapere aude ! » — Emmanuel Kant, devise des Lumières",
+        "« Connais-toi toi-même. » — maxime antique associée à Socrate",
+        "« L'existence précède l'essence. » — formule associée à Jean-Paul Sartre",
+        "« Ce qui trouble les hommes, ce ne sont pas les choses, mais les jugements qu'ils portent sur ces choses. » — Épictète",
+        "« Le bonheur dépend de nous-mêmes. » — idée associée à Aristote"
+    )
+    private val debates = listOf(
+        "Le bonheur dépend-il davantage de nos choix ou de notre situation ?",
+        "L'argent rend-il heureux ou apporte-t-il surtout du confort ?",
+        "Faut-il toujours dire la vérité, même lorsqu'elle fait mal ?",
+        "Qu'est-ce qui compte le plus dans une amitié durable ?",
+        "Les réseaux sociaux rapprochent-ils vraiment les gens ?",
+        "Peut-on réussir sa vie sans gagner beaucoup d'argent ?",
+        "Le pardon est-il toujours nécessaire après une trahison ?",
+        "Les erreurs nous apprennent-elles plus que les réussites ?",
+        "La liberté implique-t-elle des responsabilités envers les autres ?",
+        "Comment reconnaître une relation fondée sur le respect ?"
+    )
+
+    private val knowStart = listOf(
+        "Qu'est-ce qui te rend heureuse quand",
+        "Comment imagines-tu",
+        "Quel souvenir te revient quand",
+        "Qu'aimerais-tu découvrir sur",
+        "Quelle place donnes-tu à",
+        "Qu'est-ce qui compte pour toi dans",
+        "Qu'est-ce qui te donne confiance dans",
+        "Quelle petite chose apprécies-tu dans",
+        "Comment aimerais-tu vivre",
+        "Quel est ton avis sur"
+    )
+    private val knowEnd = listOf(
+        "tes moments de repos ?",
+        "tes projets pour l'avenir ?",
+        "l'amitié et la confiance ?",
+        "les voyages et les découvertes ?",
+        "la famille et les proches ?",
+        "les qualités chez une personne ?",
+        "la résolution des désaccords ?",
+        "les attentions du quotidien ?",
+        "une relation équilibrée ?",
+        "les rêves que tu veux réaliser ?"
+    )
+
+    private val chatStart = listOf(
+        "Raconte-moi", "J'aimerais connaître ton avis sur",
+        "Si on pouvait choisir ensemble",
+        "Quel souvenir aimerais-tu créer autour de",
+        "Qu'est-ce qui te ferait plaisir concernant",
+        "Imagine qu'on ait une journée libre pour",
+        "Comment pourrait-on améliorer",
+        "Dis-moi ce que tu préfères dans",
+        "Quelle serait ta réaction face à",
+        "J'aimerais en savoir davantage sur"
+    )
+    private val chatEnd = listOf(
+        "le meilleur moment de ta journée.",
+        "un projet qu'on pourrait réaliser à deux.",
+        "un endroit que tu aimerais visiter.",
+        "une musique qui te touche.",
+        "ce qui te fait rire.",
+        "nos rêves pour l'avenir.",
+        "la façon de se soutenir dans les moments difficiles.",
+        "une tradition qu'on pourrait créer ensemble.",
+        "les petites attentions qui te font plaisir.",
+        "ce que tu aimerais apprendre cette année."
+    )
+
+    private fun build(
+        category: String,
+        prefix: String,
+        starts: List<String>,
+        ends: List<String>,
+        day: Long
+    ): List<Question> {
+        val offset = Math.floorMod(day, 10L).toInt()
+        return starts.flatMapIndexed { i, start ->
+            ends.mapIndexed { j, end ->
+                val a = starts[(i + offset) % starts.size]
+                val b = ends[(j + offset) % ends.size]
+                val text = when (category) {
+                    ROMANCE -> "$a $b"
+                    CONNAISSANCE -> "$a $b"
+                    COPINE -> "$a $b"
+                    else -> "$a $b"
+                }
+                Question("${prefix}_${i}_$j", category, 1, text)
+            }
+        }
+    }
+
+    private fun catalog(category: String, day: Long): List<Question> {
+        val result = when (category) {
+            ROMANCE -> build(category, "rom", romanceStart, romanceEnd, day)
+            CONNAISSANCE -> build(category, "know", knowStart, knowEnd, day)
+            COPINE -> build(category, "chat", chatStart, chatEnd, day)
+            PHILO -> quotes.flatMapIndexed { i, quote ->
+                debates.mapIndexed { j, debate ->
+                    Question(
+                        "philo_${i}_$j", PHILO, 2,
+                        "$quote\n\nSujet à discuter : $debate"
+                    )
+                }
+            }
+            else -> emptyList()
+        }
+
+        // Les 100 propositions sont réordonnées chaque jour.
+        return result.sortedBy {
+            Math.floorMod(it.id.hashCode().toLong() * 31L + day * 17L,
+                Long.MAX_VALUE)
+        }.take(100)
+    }
+
+    fun questionsFor(
+        category: String,
+        day: Long = LocalDate.now().toEpochDay()
+    ): List<Question> = catalog(category, day)
+
+    fun dailyQuestions(
+        day: Long = LocalDate.now().toEpochDay()
+    ): List<Question> = categories.flatMap { catalog(it, day) }
+
+    val all: List<Question>
+        get() = dailyQuestions()
+}
