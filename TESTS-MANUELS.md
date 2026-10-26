@@ -1,0 +1,11 @@
+# Tests manuels
+- [ ] L'application démarre sans plantage.
+- [ ] Les questions du jour apparaissent.
+- [ ] Copier place le texte dans le presse-papiers.
+- [ ] L'autorisation de superposition est demandée si nécessaire.
+- [ ] La bulle apparaît et peut être déplacée.
+- [ ] Un toucher ouvre et ferme le panneau.
+- [ ] Autre question affiche une autre proposition.
+- [ ] Le choix de catégorie modifie les suggestions.
+- [ ] Test au-dessus de WhatsApp, Messenger et SMS.
+- [ ] Test après verrouillage/déverrouillage et redémarrage.
