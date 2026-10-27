@@ -45,7 +45,7 @@ class FloatingWindowService : Service() {
         wm = getSystemService(WINDOW_SERVICE) as WindowManager
         notifyForeground()
         showBubble()
-        handler.postDelayed(refreshRunnable, 112 * 60 * 60 * 1000L)
+        handler.postDelayed(refreshRunnable, 12 * 60 * 60 * 1000L)
     }
 
     private fun notifyForeground() {
@@ -156,7 +156,7 @@ class FloatingWindowService : Service() {
                     }
                 }
             }
-            handler.postDelayed(this, 112 * 60 * 60 * 1000L)
+            handler.postDelayed(this, 12 * 60 * 60 * 1000L)
         }
     }
 
