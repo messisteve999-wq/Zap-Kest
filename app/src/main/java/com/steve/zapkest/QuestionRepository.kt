@@ -3,72 +3,36 @@ package com.steve.zapkest
 import java.time.LocalDate
 
 object QuestionRepository {
-
     const val ROMANCE = "Romantisme, compliments et drague amicale"
-    const val PHILO = "Citations philosophiques et débats"
     const val CONNAISSANCE = "Apprendre à connaître une fille"
     const val COPINE = "Faire durer une conversation avec ma copine"
 
-    val categories = listOf(ROMANCE, PHILO, CONNAISSANCE, COPINE)
+    val categories = listOf(ROMANCE, CONNAISSANCE, COPINE)
 
-    private val romanceMessages = listOf(
+    private val romance = listOf(
         "J'aime beaucoup ton sourire.",
         "Ton humour rend nos conversations agréables.",
         "J'apprécie ta sincérité et ta façon d'être.",
-        "Tu as une manière de réfléchir qui m'intéresse.",
         "J'aime découvrir ta personnalité petit à petit.",
         "Ta gentillesse est une belle qualité.",
         "C'est toujours agréable de discuter avec toi.",
-        "J'apprécie les petites attentions que tu partages.",
         "Tu sais rendre une conversation intéressante.",
         "J'aime ton naturel, reste comme tu es.",
         "Tu as une énergie positive qui fait plaisir.",
         "J'aime la façon dont tu exprimes tes idées.",
-        "Tu mérites quelqu'un qui respecte ta personnalité.",
-        "J'apprécie ta manière d'écouter les autres.",
         "Ton sourire peut illuminer une journée ordinaire.",
         "J'aime quand on peut rire de choses simples.",
-        "Tu as des qualités qu'on découvre en prenant le temps.",
         "J'apprécie les échanges où chacun peut être lui-même.",
         "J'aime apprendre à te connaître sans précipitation.",
-        "Ta présence rend certaines journées plus agréables."
-    )
-
-    private val romanceQuestions = listOf(
         "Quelle qualité apprécies-tu le plus chez une personne ?",
         "Quel compliment te fait vraiment plaisir ?",
-        "Qu'est-ce qui te donne envie de mieux connaître quelqu'un ?",
         "Préfères-tu les mots doux ou les petites attentions ?",
-        "Pour toi, qu'est-ce qu'une belle complicité ?"
+        "Pour toi, qu'est-ce qu'une belle complicité ?",
+        "Qu'est-ce qui te donne envie de mieux connaître quelqu'un ?",
+        "Quelle petite attention te met de bonne humeur ?"
     )
 
-    private val quotes = listOf(
-        "« Je pense, donc je suis. » — René Descartes",
-        "« Le cœur a ses raisons que la raison ne connaît point. » — Blaise Pascal",
-        "« L'homme est né libre, et partout il est dans les fers. » — Jean-Jacques Rousseau",
-        "« Il faut imaginer Sisyphe heureux. » — Albert Camus",
-        "« On ne naît pas femme : on le devient. » — Simone de Beauvoir",
-        "« Sapere aude ! » — devise des Lumières associée à Emmanuel Kant",
-        "« Connais-toi toi-même. » — maxime antique traditionnellement associée à Socrate",
-        "« L'existence précède l'essence. » — formule associée à Jean-Paul Sartre",
-        "« Ce qui trouble les hommes, ce ne sont pas les choses, mais les jugements qu'ils portent sur ces choses. » — Épictète",
-        "« Le bonheur dépend de nous-mêmes. » — idée attribuée à Aristote"
-    )
-
-    private val debates = listOf(
-        "Le bonheur dépend-il davantage de nos choix ou de notre situation ?",
-        "L'argent rend-il heureux ou apporte-t-il surtout du confort ?",
-        "Faut-il toujours dire la vérité, même lorsqu'elle fait mal ?",
-        "Qu'est-ce qui compte le plus dans une amitié durable ?",
-        "Les réseaux sociaux rapprochent-ils vraiment les gens ?",
-        "Peut-on réussir sa vie sans gagner beaucoup d'argent ?",
-        "Le pardon est-il toujours nécessaire après une trahison ?",
-        "Les erreurs nous apprennent-elles plus que les réussites ?",
-        "La liberté implique-t-elle des responsabilités envers les autres ?",
-        "Comment reconnaître une relation fondée sur le respect ?"
-    )
-
-    private val knowQuestions = listOf(
+    private val connaissance = listOf(
         "Qu'est-ce qui te rend heureuse pendant tes moments de repos ?",
         "Comment imagines-tu ta vie dans quelques années ?",
         "Quel souvenir te fait toujours sourire ?",
@@ -81,7 +45,7 @@ object QuestionRepository {
         "Quel rêve aimerais-tu réaliser en priorité ?",
         "Quelles qualités admires-tu chez les autres ?",
         "Comment préfères-tu régler un désaccord ?",
-        "Qu'est-ce qui te motive quand tu traverses une période difficile ?",
+        "Qu'est-ce qui te motive dans une période difficile ?",
         "Quelle activité te fait perdre la notion du temps ?",
         "Quelle musique correspond à ton humeur actuelle ?",
         "Quel est le meilleur conseil qu'on t'ait donné ?",
@@ -91,7 +55,7 @@ object QuestionRepository {
         "Qu'est-ce qui te fait te sentir respectée et écoutée ?"
     )
 
-    private val chatQuestions = listOf(
+    private val copine = listOf(
         "Raconte-moi le meilleur moment de ta journée.",
         "Quel projet aimerais-tu qu'on réalise ensemble ?",
         "Si on pouvait voyager demain, où aimerais-tu aller ?",
@@ -108,118 +72,43 @@ object QuestionRepository {
         "Quelle activité simple te ferait plaisir ce week-end ?",
         "Qu'est-ce qui te donne le sentiment qu'on est une bonne équipe ?",
         "Comment préfères-tu qu'on se réconcilie après un désaccord ?",
-        "Quelle est la chose que tu aimerais faire plus souvent avec moi ?",
+        "Quelle chose aimerais-tu faire plus souvent avec moi ?",
         "Qu'est-ce qui rend une journée ordinaire spéciale pour toi ?",
         "Quelle nouvelle activité pourrait-on découvrir ensemble ?",
         "De quoi aimerais-tu parler davantage avec moi ?"
     )
 
-    private fun stableOrder(
-        questions: List<Question>,
-        day: Long
-    ): List<Question> {
-        return questions.sortedBy {
-            val hash = it.id.hashCode().toLong()
-            Math.floorMod(hash * 31L + day * 17L, Long.MAX_VALUE)
-        }
-    }
-
-    private fun makeQuestions(
-        category: String,
-        prefix: String,
-        messages: List<String>,
-        day: Long,
-        level: Int = 1
-    ): List<Question> {
-        val expanded = buildList {
-            messages.forEachIndexed { index, message ->
-                add(Question("${prefix}_$index", category, level, message))
-            }
-        }
-
-        val unique = expanded.distinctBy { it.text.trim().lowercase() }
-        if (unique.isEmpty()) return emptyList()
-
+    private fun expand(category: String, prefix: String, source: List<String>, day: Long): List<Question> {
         val result = mutableListOf<Question>()
-        result.addAll(unique)
-
-        var round = 1
+        val unique = source.distinct()
+        var round = 0
         while (result.size < 50) {
-            unique.forEachIndexed { index, question ->
+            unique.forEachIndexed { i, text ->
                 if (result.size < 50) {
-                    result.add(
-                        Question(
-                            "${prefix}_${round}_${index}",
-                            category,
-                            question.level,
-                            variation(question.text, round)
-                        )
-                    )
+                    val suffix = if (round == 0) "" else when (round % 4) {
+                        1 -> " Et toi, qu'en penses-tu ?"
+                        2 -> " J'aimerais connaître ton avis."
+                        3 -> " Tu peux m'en dire davantage ?"
+                        else -> " Pourquoi est-ce important pour toi ?"
+                    }
+                    result.add(Question("${prefix}_${round}_$i", category, 1, text + suffix))
                 }
             }
             round++
         }
-
-        return stableOrder(result, day).take(50)
+        return result.sortedBy { Math.floorMod(it.id.hashCode().toLong() * 31L + day * 17L, Long.MAX_VALUE) }
     }
 
-    private fun variation(text: String, round: Int): String {
-        return when (round % 5) {
-            0 -> "$text Qu'en penses-tu ?"
-            1 -> "$text Et toi, comment le vois-tu ?"
-            2 -> "$text J'aimerais connaître ton avis."
-            3 -> "$text Tu peux m'en dire davantage ?"
-            else -> "$text Pourquoi est-ce important pour toi ?"
-        }
-    }
-
-    private fun catalog(category: String, day: Long): List<Question> {
-        return when (category) {
-            ROMANCE -> makeQuestions(
-                ROMANCE, "rom",
-                romanceMessages + romanceQuestions,
-                day
-            )
-
-            CONNAISSANCE -> makeQuestions(
-                CONNAISSANCE, "know",
-                knowQuestions,
-                day
-            )
-
-            COPINE -> makeQuestions(
-                COPINE, "chat",
-                chatQuestions,
-                day
-            )
-
-            PHILO -> {
-                val combinations = quotes.flatMapIndexed { i, quote ->
-                    debates.mapIndexed { j, debate ->
-                        Question(
-                            "philo_${i}_$j",
-                            PHILO,
-                            2,
-                            "$quote\n\nSujet à discuter : $debate"
-                        )
-                    }
-                }
-                stableOrder(combinations, day).take(50)
-            }
-
+    fun questionsFor(category: String, day: Long = LocalDate.now().toEpochDay()): List<Question> =
+        when (category) {
+            ROMANCE -> expand(ROMANCE, "rom", romance, day)
+            CONNAISSANCE -> expand(CONNAISSANCE, "know", connaissance, day)
+            COPINE -> expand(COPINE, "couple", copine, day)
             else -> emptyList()
         }
-    }
 
-    fun questionsFor(
-        category: String,
-        day: Long = LocalDate.now().toEpochDay()
-    ): List<Question> = catalog(category, day)
+    fun dailyQuestions(day: Long = LocalDate.now().toEpochDay()): List<Question> =
+        categories.flatMap { questionsFor(it, day) }
 
-    fun dailyQuestions(
-        day: Long = LocalDate.now().toEpochDay()
-    ): List<Question> = categories.flatMap { catalog(it, day) }
-
-    val all: List<Question>
-        get() = dailyQuestions()
+    val all: List<Question> get() = dailyQuestions()
 }
