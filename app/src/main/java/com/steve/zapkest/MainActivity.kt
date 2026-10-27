@@ -32,22 +32,201 @@ class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) { super.onCreate(savedInstanceState); render() }
 
     private fun render() {
-        val root = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setBackgroundColor(dark); setPadding(dp(16), dp(20), dp(16), dp(16)) }
-        root.addView(label("ZAP KEST V4", 28f, green))
-        root.addView(label("Trois catalogues · Deux fenêtres flottantes maximum · Actualisation toutes les 12 heures.", 15f))
-        root.addView(label("QUESTIONS ET MESSAGES", 18f, green))
-        val list = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        QuestionRepository.dailyQuestions().forEach { q ->
-            val item = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setBackgroundColor(card); setPadding(dp(10), dp(7), dp(10), dp(7)) }
-            item.addView(label(q.category.uppercase(), 11f, green))
-            item.addView(label(q.text, 15f))
-            item.addView(btn("Copier") { ClipboardHelper.copy(this@MainActivity, q.text) })
-            list.addView(item, LinearLayout.LayoutParams(-1, -2).apply { bottomMargin = dp(9) })
+        val root = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setBackgroundColor(Color.rgb(10, 12, 20))
+            setPadding(dp(18), dp(18), dp(18), dp(12))
         }
-        val scroll = ScrollView(this); scroll.addView(list); root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
-        root.addView(btn("Activer les fenêtres flottantes") { enableOverlay() })
-        root.addView(btn("Configurer Google Search (API existante)") { configureGoogleSearch() })
-        root.addView(btn("Choisir une catégorie") { chooseCategory() })
+
+        val scroll = ScrollView(this)
+        val content = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+        }
+
+        fun space(height: Int) {
+            content.addView(
+                TextView(this).apply { text = "" },
+                LinearLayout.LayoutParams(-1, dp(height))
+            )
+        }
+
+        fun section(text: String) {
+            content.addView(TextView(this).apply {
+                this.text = text
+                textSize = 13f
+                setTextColor(Color.rgb(166, 174, 204))
+                setPadding(dp(2), dp(8), dp(2), dp(8))
+                letterSpacing = 0.08f
+            })
+        }
+
+        fun panel(title: String, subtitle: String, symbol: String) {
+            val box = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(16), dp(14), dp(16), dp(14))
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(Color.rgb(25, 29, 45))
+                    cornerRadius = dp(18).toFloat()
+                    setStroke(dp(1), Color.rgb(47, 53, 77))
+                }
+            }
+            box.addView(TextView(this).apply {
+                text = "$symbol   $title"
+                textSize = 17f
+                setTextColor(Color.WHITE)
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+            })
+            box.addView(TextView(this).apply {
+                text = subtitle
+                textSize = 13f
+                setTextColor(Color.rgb(180, 187, 210))
+                setPadding(0, dp(6), 0, 0)
+            })
+            content.addView(box, LinearLayout.LayoutParams(-1, -2).apply {
+                bottomMargin = dp(10)
+            })
+        }
+
+        content.addView(TextView(this).apply {
+            text = "S"
+            textSize = 34f
+            gravity = Gravity.CENTER
+            setTextColor(Color.BLACK)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            background = android.graphics.drawable.GradientDrawable().apply {
+                setColor(Color.WHITE)
+                cornerRadius = dp(18).toFloat()
+            }
+        }, LinearLayout.LayoutParams(dp(62), dp(62)))
+
+        space(12)
+
+        content.addView(TextView(this).apply {
+            text = "ZAP KEST"
+            textSize = 28f
+            setTextColor(Color.WHITE)
+            typeface = android.graphics.Typeface.DEFAULT_BOLD
+            letterSpacing = 0.04f
+        })
+
+        content.addView(TextView(this).apply {
+            text = "V5  •  TON ASSISTANT INTELLIGENT"
+            textSize = 12f
+            setTextColor(Color.rgb(165, 133, 255))
+            setPadding(0, dp(5), 0, dp(4))
+        })
+
+        content.addView(TextView(this).apply {
+            text = "Tes idées, tes messages et ton assistant au même endroit."
+            textSize = 14f
+            setTextColor(Color.rgb(184, 190, 210))
+        })
+
+        space(18)
+        panel("Assistant IA", "Prépare tes questions et tes réponses.", "✦")
+        panel("Fenêtre flottante", "Accède à ton assistant pendant que tu utilises d'autres applications.", "▣")
+
+        section("ACCÈS RAPIDE")
+
+        fun actionButton(
+            title: String,
+            subtitle: String,
+            color: Int = Color.rgb(124, 92, 255),
+            action: () -> Unit
+        ) {
+            val b = Button(this).apply {
+                text = "$title\n$subtitle"
+                textSize = 13f
+                isAllCaps = false
+                gravity = Gravity.CENTER_VERTICAL
+                setTextColor(Color.WHITE)
+                setPadding(dp(12), dp(10), dp(12), dp(10))
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(color)
+                    cornerRadius = dp(14).toFloat()
+                }
+                setOnClickListener { action() }
+            }
+            content.addView(b, LinearLayout.LayoutParams(-1, dp(62)).apply {
+                bottomMargin = dp(9)
+            })
+        }
+
+        actionButton("Ouvrir les fenêtres flottantes", "Lancer l'assistant") {
+            enableOverlay()
+        }
+
+        actionButton(
+            "Configurer Google Search",
+            "Paramètres de recherche existants",
+            Color.rgb(43, 49, 70)
+        ) {
+            configureGoogleSearch()
+        }
+
+        actionButton(
+            "Explorer les catégories",
+            "Découvrir les questions du jour",
+            Color.rgb(43, 49, 70)
+        ) {
+            chooseCategory()
+        }
+
+        section("QUESTIONS DU JOUR")
+
+        QuestionRepository.dailyQuestions().forEach { q ->
+            val item = LinearLayout(this).apply {
+                orientation = LinearLayout.VERTICAL
+                setPadding(dp(14), dp(12), dp(14), dp(12))
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(Color.rgb(23, 27, 41))
+                    cornerRadius = dp(16).toFloat()
+                    setStroke(dp(1), Color.rgb(43, 48, 68))
+                }
+            }
+
+            item.addView(TextView(this).apply {
+                text = q.category.uppercase()
+                textSize = 11f
+                setTextColor(Color.rgb(165, 133, 255))
+            })
+
+            item.addView(TextView(this).apply {
+                text = q.text
+                textSize = 15f
+                setTextColor(Color.WHITE)
+                setPadding(0, dp(7), 0, dp(8))
+            })
+
+            val copy = Button(this).apply {
+                text = "Copier la question"
+                isAllCaps = false
+                setOnClickListener {
+                    ClipboardHelper.copy(this@MainActivity, q.text)
+                }
+            }
+            item.addView(copy)
+
+            content.addView(item, LinearLayout.LayoutParams(-1, -2).apply {
+                bottomMargin = dp(10)
+            })
+        }
+
+        scroll.addView(content)
+        root.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
+
+        root.addView(TextView(this).apply {
+            text = "ZAP KEST  •  SIMPLE, RAPIDE, INTELLIGENT"
+            textSize = 10f
+            gravity = Gravity.CENTER
+            setTextColor(Color.rgb(135, 143, 169))
+            setPadding(0, dp(12), 0, dp(4))
+        })
+
+        window.statusBarColor = Color.rgb(10, 12, 20)
+        window.navigationBarColor = Color.rgb(10, 12, 20)
+        window.decorView.systemUiVisibility = 0
+
         setContentView(root)
     }
 
@@ -58,6 +237,42 @@ class MainActivity : Activity() {
         }
         val intent = Intent(this, FloatingWindowService::class.java)
         if (Build.VERSION.SDK_INT >= 26) startForegroundService(intent) else startService(intent)
+    }
+
+
+    private fun configureGemini() {
+        val prefs = getSharedPreferences("zap_kest", MODE_PRIVATE)
+        val key = EditText(this).apply {
+            hint = "Clé API Gemini"
+            inputType = InputType.TYPE_CLASS_TEXT or
+                InputType.TYPE_TEXT_VARIATION_PASSWORD
+            setText(prefs.getString("gemini_api_key", ""))
+        }
+
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(dp(20), dp(8), dp(20), dp(4))
+            addView(key)
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Gemini — AutoZap")
+            .setMessage(
+                "Entre ta clé API Gemini. Tu peux en obtenir une sur Google AI Studio."
+            )
+            .setView(layout)
+            .setPositiveButton("Enregistrer") { _, _ ->
+                GeminiAssistant.saveKey(this, key.text.toString())
+                Toast.makeText(
+                    this,
+                    if (GeminiAssistant.hasKey(this))
+                        "Clé Gemini enregistrée"
+                    else "Clé effacée",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+            .setNegativeButton("Annuler", null)
+            .show()
     }
 
     private fun configureGoogleSearch() {
