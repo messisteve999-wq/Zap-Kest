@@ -297,7 +297,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
                 this,
                 conversation.ifBlank { "$sender: $message" }
             ) { answer ->
-                if (overlay === root) suggestion.text = answer
+                if (overlay === root) suggestion.setText(answer)
             }
         } catch (_: Exception) {
             // L'accès aux fenêtres flottantes peut être désactivé par Android.
