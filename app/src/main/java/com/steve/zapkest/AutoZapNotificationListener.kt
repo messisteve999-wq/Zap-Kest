@@ -153,15 +153,41 @@ class AutoZapNotificationListener : NotificationListenerService() {
             val root = LinearLayout(this).apply {
                 orientation = LinearLayout.VERTICAL
                 setPadding(dp(12), dp(10), dp(12), dp(10))
-                setBackgroundColor(Color.WHITE)
-                elevation = dp(10).toFloat()
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(Color.rgb(12, 14, 22))
+                    cornerRadius = dp(22).toFloat()
+                    setStroke(dp(1), Color.rgb(112, 88, 255))
+                }
+                elevation = dp(12).toFloat()
             }
 
-            root.addView(TextView(this).apply {
-                text = "S  •  AUTOZAP"
-                textSize = 17f
+            val header = LinearLayout(this).apply {
+                orientation = LinearLayout.HORIZONTAL
+                gravity = Gravity.CENTER_VERTICAL
+                setPadding(0, 0, 0, dp(8))
+            }
+
+            header.addView(TextView(this).apply {
+                text = "S"
+                textSize = 25f
+                gravity = Gravity.CENTER
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
                 setTextColor(Color.BLACK)
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(Color.WHITE)
+                    cornerRadius = dp(14).toFloat()
+                }
+            }, LinearLayout.LayoutParams(dp(48), dp(48)))
+
+            header.addView(TextView(this).apply {
+                text = "STEVE  •  AUTOZAP V5.1"
+                textSize = 16f
+                typeface = android.graphics.Typeface.DEFAULT_BOLD
+                setTextColor(Color.WHITE)
+                setPadding(dp(10), 0, 0, 0)
             })
+
+            root.addView(header)
 
             root.addView(TextView(this).apply {
                 text = "$appName · $sender\n$message"
@@ -171,18 +197,33 @@ class AutoZapNotificationListener : NotificationListenerService() {
                 setPadding(0, dp(6), 0, dp(6))
             })
 
-            val suggestion = TextView(this).apply {
-                text = "Préparation de la suggestion Gemini…"
+            val suggestion = android.widget.EditText(this).apply {
+                setText("Préparation de la suggestion Gemini…")
+                hint = "Modifie ta réponse ici…"
                 textSize = 14f
-                setTextColor(Color.BLACK)
-                setPadding(0, dp(5), 0, dp(8))
+                setTextColor(Color.WHITE)
+                setHintTextColor(Color.LTGRAY)
+                setPadding(dp(12), dp(10), dp(12), dp(10))
+                minLines = 2
+                maxLines = 5
+                gravity = Gravity.TOP
+                background = android.graphics.drawable.GradientDrawable().apply {
+                    setColor(Color.rgb(25, 29, 43))
+                    cornerRadius = dp(14).toFloat()
+                    setStroke(dp(1), Color.rgb(65, 70, 100))
+                }
             }
             root.addView(suggestion)
 
             fun addButton(label: String, click: () -> Unit) {
                 root.addView(Button(this).apply {
                     text = label
-                    setTextColor(Color.BLACK)
+                    setTextColor(Color.WHITE)
+                    isAllCaps = false
+                    background = android.graphics.drawable.GradientDrawable().apply {
+                        setColor(Color.rgb(48, 42, 82))
+                        cornerRadius = dp(12).toFloat()
+                    }
                     setOnClickListener { click() }
                 })
             }
@@ -237,8 +278,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
                 dp(300),
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 type,
-                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE or
-                    WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
                 PixelFormat.TRANSLUCENT
             ).apply {
                 gravity = Gravity.TOP or Gravity.END
