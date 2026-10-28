@@ -185,7 +185,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
             }, LinearLayout.LayoutParams(dp(48), dp(48)))
 
             header.addView(TextView(this).apply {
-                text = "STEVE  •  AUTOZAP V5.1"
+                text = "STEVE  •  ZAP KEST V7"
                 textSize = 16f
                 typeface = android.graphics.Typeface.DEFAULT_BOLD
                 setTextColor(Color.WHITE)
@@ -272,7 +272,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
                 }
             }
 
-            addButton("Copier la suggestion") {
+            addButton("SugesZap : copier la suggestion") {
                 val answer = suggestion.text.toString()
                 if (!answer.startsWith("Préparation")) {
                     val clipboard =
@@ -287,7 +287,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
             }
 
             if (action != null) {
-                addButton("Envoyer la réponse") {
+                addButton("SugesZap : envoyer la réponse") {
                     val answer = suggestion.text.toString()
                     if (!answer.startsWith("Préparation") &&
                         !answer.startsWith("Configure d'abord") &&
@@ -333,7 +333,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
             manager.addView(root, params)
             overlay = root
 
-            val conversation = messages().takeLast(8).joinToString("\n") {
+            val conversation = messages().filter { it.packageName == packageName && it.sender == sender }.takeLast(8).joinToString("\n") {
                 "${it.sender}: ${it.text}"
             }
 

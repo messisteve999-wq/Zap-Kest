@@ -88,7 +88,7 @@ class MainActivity : Activity() {
         }
 
         content.addView(TextView(this).apply {
-            text = "S"
+            text = "♛"
             textSize = 34f
             gravity = Gravity.CENTER
             setTextColor(Color.BLACK)
@@ -110,7 +110,7 @@ class MainActivity : Activity() {
         })
 
         content.addView(TextView(this).apply {
-            text = "V5  •  TON ASSISTANT INTELLIGENT"
+            text = "V7  •  STEVE AI • GEMINI"
             textSize = 12f
             setTextColor(Color.rgb(165, 133, 255))
             setPadding(0, dp(5), 0, dp(4))
@@ -123,7 +123,8 @@ class MainActivity : Activity() {
         })
 
         space(18)
-        panel("Assistant IA", "Prépare tes questions et tes réponses.", "✦")
+        panel("AutoZap", "Réponses automatiques pour les contacts autorisés et configurés.", "⚡")
+        panel("SugesZap", "Suggestions Gemini modifiables avant envoi.", "✦")
         panel("Fenêtre flottante", "Accède à ton assistant pendant que tu utilises d'autres applications.", "▣")
 
         section("ACCÈS RAPIDE")
@@ -171,6 +172,39 @@ class MainActivity : Activity() {
         ) {
             chooseCategory()
         }
+
+        section("MESSAGERIES • AUTOZAP / SUGESZAP")
+
+        actionButton(
+            "Autoriser l'accès aux notifications",
+            "Détecter les messages compatibles",
+            Color.rgb(43, 49, 70)
+        ) {
+            AutoZapNotificationListener.openNotificationAccess(this)
+        }
+
+        actionButton(
+            "Autoriser la fenêtre flottante",
+            "Afficher Steve au-dessus des applications",
+            Color.rgb(43, 49, 70)
+        ) {
+            if (!Settings.canDrawOverlays(this)) {
+                startActivity(
+                    Intent(
+                        Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                        Uri.parse("package:$packageName")
+                    )
+                )
+            } else {
+                Toast.makeText(this, "Autorisation déjà active", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        panel(
+            "Contacts autorisés",
+            "Dans la fenêtre AutoZap, autorise chaque contact reçu par notification. Maximum : 4 par application. Active le mode automatique uniquement pour les contacts souhaités.",
+            "♙"
+        )
 
         section("QUESTIONS DU JOUR")
 
