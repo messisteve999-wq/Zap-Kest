@@ -157,11 +157,11 @@ class MainActivity : Activity() {
         }
 
         actionButton(
-            "Configurer Google Search",
-            "Paramètres de recherche existants",
+            "Configurer Gemini et la recherche IA",
+            "Suggestions de messages et recherche assistée",
             Color.rgb(43, 49, 70)
         ) {
-            configureGoogleSearch()
+            configureGemini()
         }
 
         actionButton(

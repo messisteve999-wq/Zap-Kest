@@ -24,6 +24,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
 
     data class Message(
         val app: String,
+        val packageName: String,
         val sender: String,
         val text: String,
         val time: Long
@@ -105,7 +106,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
             sbn.packageName
         }
 
-        addMessage(Message(appName, sender, text, sbn.postTime))
+        addMessage(Message(appName, sbn.packageName, sender, text, sbn.postTime))
 
         val replyAction = notification.actions?.firstOrNull { action ->
             action.remoteInputs?.any { it.allowFreeFormInput } == true
@@ -117,13 +118,16 @@ class AutoZapNotificationListener : NotificationListenerService() {
             Build.VERSION.SDK_INT >= 23 &&
             Settings.canDrawOverlays(this)
         ) {
-            showAutoZap(appName, sender, text, replyAction)
+            showAutoZap(appName, sender, text, replyAction, sbn.packageName)
         }
 
-        if (autoReplyEnabled(this) && replyAction != null) {
-            val conversation = messages().takeLast(8).joinToString("\n") {
-                "${it.sender}: ${it.text}"
-            }
+        if (AutoZapSettings.isAutomatic(this, sbn.packageName, sender) && replyAction != null) {
+            // Ne jamais mélanger les conversations d'autres contacts ou applications.
+            val conversation = messages()
+                .filter { it.packageName == sbn.packageName && it.sender == sender }
+                .takeLast(8)
+                .joinToString("\n") { "${it.sender}: ${it.text}" }
+                .ifBlank { "$sender: $text" }
 
             GeminiAssistant.generate(this, conversation) { answer ->
                 if (answer.isNotBlank() &&
@@ -143,7 +147,8 @@ class AutoZapNotificationListener : NotificationListenerService() {
         appName: String,
         sender: String,
         message: String,
-        action: Notification.Action?
+        action: Notification.Action?,
+        packageName: String
     ) {
         try {
             val manager = getSystemService(WINDOW_SERVICE) as WindowManager
@@ -192,7 +197,7 @@ class AutoZapNotificationListener : NotificationListenerService() {
             root.addView(TextView(this).apply {
                 text = "$appName · $sender\n$message"
                 textSize = 13f
-                setTextColor(Color.DKGRAY)
+                setTextColor(Color.LTGRAY)
                 maxLines = 5
                 setPadding(0, dp(6), 0, dp(6))
             })
@@ -226,6 +231,45 @@ class AutoZapNotificationListener : NotificationListenerService() {
                     }
                     setOnClickListener { click() }
                 })
+            }
+
+            val contactAllowed = AutoZapSettings.isAllowed(this, packageName, sender)
+            val autoEnabled = AutoZapSettings.isAutomatic(this, packageName, sender)
+
+            addButton(
+                if (contactAllowed) "Retirer ce contact des autorisés"
+                else "Autoriser ce contact (${AutoZapSettings.allowedCount(this, packageName)}/4)"
+            ) {
+                val success = AutoZapSettings.setAllowed(
+                    this, packageName, sender, !contactAllowed
+                )
+                if (!success) {
+                    Toast.makeText(
+                        this,
+                        "Limite de 4 contacts autorisés pour cette application.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    showAutoZap(appName, sender, message, action, packageName)
+                }
+            }
+
+            addButton(
+                if (autoEnabled) "Mode automatique : ACTIVÉ"
+                else "Mode automatique : désactivé"
+            ) {
+                if (!contactAllowed) {
+                    Toast.makeText(
+                        this,
+                        "Autorise d'abord ce contact.",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    AutoZapSettings.setAutomatic(
+                        this, packageName, sender, !autoEnabled
+                    )
+                    showAutoZap(appName, sender, message, action, packageName)
+                }
             }
 
             addButton("Copier la suggestion") {
